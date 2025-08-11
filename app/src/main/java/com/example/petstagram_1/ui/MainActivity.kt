@@ -1,7 +1,8 @@
-package com.example.petstagram_1
+package com.example.petstagram_1.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.petstagram_1.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
