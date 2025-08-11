@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Primary Brand Colors from Gradient -->
+    <color name="brand_purple">#833AB4</color>
+    <color name="brand_pink">#E1306C</color>
+    <color name="brand_orange">#FD963F</color>
+    <color name="brand_yellow">#FFDC80</color>
+
+    <!-- Standard Colors -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="light_gray">#F0F0F0</color>
 </resources>
