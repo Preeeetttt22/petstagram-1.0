@@ -177,7 +177,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Sign In with Google"
-                app:icon="@drawable/google"
+                app:icon="@drawable/ic_google_logo"
                 app:iconGravity="textStart"
                 app:cornerRadius="15dp"
                 android:backgroundTint="@color/white"

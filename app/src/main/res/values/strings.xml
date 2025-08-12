@@ -1,20 +1,20 @@
 <resources>
-    <string name="app_name">petstagram-1</string>
+    <!-- App Info -->
+    <string name="app_name">Petstagram</string>
     <string name="title_activity_main">Petstagram</string>
-    <!-- PASTE YOUR WEB CLIENT ID HERE -->
     <string name="default_web_client_id" translatable="false">YOUR_WEB_CLIENT_ID</string>
 
-    <!-- Strings for the login screen -->
+    <!-- Login Screen -->
     <string name="login_background">Login screen background</string>
     <string name="app_logo_description">Petstagram App Logo</string>
-    <string name="sign_in_header">Log In</string>
+    <string name="sign_in_header">Sign In</string>
     <string name="email_hint">E-mail</string>
     <string name="password_hint">Password</string>
     <string name="forgot_password">Forgot Password?</string>
-    <string name="sign_in_button">Login</string>
+    <string name="sign_in_button">Signin</string>
     <string name="sign_up_prompt">Don\'t have an account? Sign Up</string>
 
-    <!-- Strings for the signup screen -->
+    <!-- Signup Screen -->
     <string name="signup_background">Signup screen background</string>
     <string name="sign_up_header">Sign Up</string>
     <string name="username_hint">Username</string>
@@ -24,4 +24,34 @@
     <string name="role_veterinarian">Veterinarian</string>
     <string name="sign_up_button">Sign Up</string>
     <string name="login_prompt">Already have an account? Sign In</string>
+
+    <!-- Navigation Header -->
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="nav_header_subtitle">user@petstagram.com</string>
+
+    <!-- Navigation Drawer Menu -->
+    <string name="menu_dashboard">Dashboard</string>
+    <string name="menu_profile">Profile</string>
+    <string name="menu_settings">Settings</string>
+    <string name="admin_section_title">Admin</string>
+    <string name="menu_admin_panel">Admin Panel</string>
+
+    <!-- Options Menu -->
+    <string name="action_logout">Logout</string>
+
+    <!-- Dashboard Screen -->
+    <string name="quick_actions">Quick Actions</string>
+    <string name="find_vet">Find Vet</string>
+    <string name="post">Post</string>
+    <string name="ai_assistant">AI Assistant</string>
+    <string name="medical_record">Medical Record</string>
+    <string name="join_community">Join Our Growing Community</string>
+    <string name="pet_parents">Pet Parents</string>
+    <string name="veterinarians">Veterinarians</string>
+    <string name="app_rating">App Rating</string>
+
+    <string name="add_new_post">Add new post</string>
+
+    <string name="add_new_record">Add new medical record</string>
+    <string name="download_record">Download record</string>
 </resources>

@@ -1,6 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/nav_graph">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/nav_dashboard">
+
+    <!-- Dashboard Screen -->
+    <fragment
+        android:id="@+id/nav_dashboard"
+        android:name="com.example.petstagram_1.ui.dashboard.DashboardFragment"
+        android:label="@string/menu_dashboard"
+        tools:layout="@layout/fragment_dashboard" >
+
+        <!-- ADDED: Actions to navigate FROM the dashboard TO other screens -->
+        <action
+            android:id="@+id/action_nav_dashboard_to_nav_vet_appointment"
+            app:destination="@id/nav_vet_appointment" />
+        <action
+            android:id="@+id/action_nav_dashboard_to_nav_community_forum"
+            app:destination="@id/nav_community_forum" />
+        <action
+            android:id="@+id/action_nav_dashboard_to_nav_ai_assistant"
+            app:destination="@id/nav_ai_assistant" />
+        <action
+            android:id="@+id/action_nav_dashboard_to_nav_medical_record"
+            app:destination="@id/nav_medical_record" />
+    </fragment>
+
+    <!-- Other top-level screens -->
+    <fragment
+        android:id="@+id/nav_profile"
+        android:name="com.example.petstagram_1.ui.profile.ProfileFragment"
+        android:label="@string/menu_profile"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/nav_settings"
+        android:name="com.example.petstagram_1.ui.settings.SettingsFragment"
+        android:label="@string/menu_settings"
+        tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/nav_admin_panel"
+        android:name="com.example.petstagram_1.ui.admin.AdminPanelFragment"
+        android:label="@string/menu_admin_panel"
+        tools:layout="@layout/fragment_admin_panel" />
+
+    <!-- Feature screens that are not in the main navigation drawer -->
+    <fragment
+        android:id="@+id/nav_vet_appointment"
+        android:name="com.example.petstagram_1.ui.dashboard.VetAppointmentFragment"
+        android:label="Vet Appointment"
+        tools:layout="@layout/fragment_vet_appointment" />
+    <fragment
+        android:id="@+id/nav_community_forum"
+        android:name="com.example.petstagram_1.ui.dashboard.CommunityForumFragment"
+        android:label="Community Forum"
+        tools:layout="@layout/fragment_community_forum" />
+    <fragment
+        android:id="@+id/nav_ai_assistant"
+        android:name="com.example.petstagram_1.ui.dashboard.AiAssistantFragment"
+        android:label="AI Assistant"
+        tools:layout="@layout/fragment_ai_assistant" />
+    <fragment
+        android:id="@+id/nav_medical_record"
+        android:name="com.example.petstagram_1.ui.dashboard.MedicalRecordFragment"
+        android:label="Medical Record"
+        tools:layout="@layout/fragment_medical_record" />
 
 </navigation>
