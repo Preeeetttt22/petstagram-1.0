@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- THE FIX IS HERE: Changed the root layout to a FrameLayout -->
+<!-- The root MUST be a FrameLayout for the adapter code to work -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"

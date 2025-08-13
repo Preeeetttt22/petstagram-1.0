@@ -11,8 +11,6 @@
         android:name="com.example.petstagram_1.ui.dashboard.DashboardFragment"
         android:label="@string/menu_dashboard"
         tools:layout="@layout/fragment_dashboard" >
-
-        <!-- ADDED: Actions to navigate FROM the dashboard TO other screens -->
         <action
             android:id="@+id/action_nav_dashboard_to_nav_vet_appointment"
             app:destination="@id/nav_vet_appointment" />
@@ -27,17 +25,26 @@
             app:destination="@id/nav_medical_record" />
     </fragment>
 
-    <!-- Other top-level screens -->
+    <!-- Profile Screen -->
     <fragment
         android:id="@+id/nav_profile"
         android:name="com.example.petstagram_1.ui.profile.ProfileFragment"
         android:label="@string/menu_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <!-- ADDED: Action to navigate from Profile to My Pets -->
+        <action
+            android:id="@+id/action_nav_profile_to_myPetsFragment"
+            app:destination="@id/myPetsFragment" />
+    </fragment>
+
+    <!-- Settings Screen -->
     <fragment
         android:id="@+id/nav_settings"
         android:name="com.example.petstagram_1.ui.settings.SettingsFragment"
         android:label="@string/menu_settings"
         tools:layout="@layout/fragment_settings" />
+
+    <!-- Admin Panel Screen -->
     <fragment
         android:id="@+id/nav_admin_panel"
         android:name="com.example.petstagram_1.ui.admin.AdminPanelFragment"
@@ -65,5 +72,24 @@
         android:name="com.example.petstagram_1.ui.dashboard.MedicalRecordFragment"
         android:label="Medical Record"
         tools:layout="@layout/fragment_medical_record" />
+
+    <!-- ADDED: My Pets Screen -->
+    <fragment
+        android:id="@+id/myPetsFragment"
+        android:name="com.example.petstagram_1.ui.profile.MyPetsFragment"
+        android:label="My Pets"
+        tools:layout="@layout/fragment_my_pets" >
+        <!-- Action to navigate from My Pets to Add Pet -->
+        <action
+            android:id="@+id/action_myPetsFragment_to_addPetFragment"
+            app:destination="@id/addPetFragment" />
+    </fragment>
+
+    <!-- ADDED: Add Pet Screen -->
+    <fragment
+        android:id="@+id/addPetFragment"
+        android:name="com.example.petstagram_1.ui.profile.AddPetFragment"
+        android:label="@string/add_pet"
+        tools:layout="@layout/fragment_add_pet" />
 
 </navigation>

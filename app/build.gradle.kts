@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.gms.google-services")
+    id("kotlin-kapt")
 }
 
 android {
@@ -67,10 +68,19 @@ dependencies {
     // Firebase Firestore Database
     implementation("com.google.firebase:firebase-firestore-ktx")
 
+    // --- ADD THIS LINE FOR FIREBASE STORAGE ---
+    implementation("com.google.firebase:firebase-storage-ktx")
+
     // Google Maps for Vet Appointments
     implementation("com.google.android.gms:play-services-maps:18.2.0")
 
     // Gemini AI for AI Assistant
     // (Note: Check for the latest version of the Gemini SDK when implementing)
     implementation("com.google.ai.client.generativeai:generativeai:0.6.0")
+
+    //Image Loading
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+    kapt("com.github.bumptech.glide:compiler:4.16.0")
+
+    implementation("com.cloudinary:cloudinary-android:2.4.0")
 }
