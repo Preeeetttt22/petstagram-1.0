@@ -46,7 +46,13 @@ class MyPetsFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        petAdapter = PetAdapter(petList)
+        // --- UPDATED ADAPTER INITIALIZATION ---
+        // We now pass the click handling logic directly to the adapter.
+        petAdapter = PetAdapter(petList) { pet ->
+            // This code will run when a pet is clicked
+            val action = MyPetsFragmentDirections.actionMyPetsFragmentToMedicalRecordFragment(pet.petId, pet.name)
+            findNavController().navigate(action)
+        }
         binding.petsRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = petAdapter

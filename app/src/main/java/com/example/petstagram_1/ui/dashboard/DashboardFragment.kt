@@ -45,6 +45,7 @@ class DashboardFragment : Fragment() {
         binding.btnMedicalRecord.setOnClickListener {
             findNavController().navigate(R.id.action_nav_dashboard_to_nav_medical_record)
         }
+
     }
 
     override fun onDestroyView() {

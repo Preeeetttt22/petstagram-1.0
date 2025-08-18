@@ -54,6 +54,12 @@
             android:exported="false"
             android:theme="@style/Theme.Petstagram_1.NoActionBar"/>
 
+        <!-- Edit Profile Activity -->
+        <activity
+            android:name=".ui.profile.EditProfileActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Petstagram_1.NoActionBar"/>
+
     </application>
 
 </manifest>

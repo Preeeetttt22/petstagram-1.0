@@ -33,7 +33,8 @@ class CommentActivity : AppCompatActivity() {
         setupRecyclerView()
         setupCommentInput()
 
-        if (postId != null) {
+        // --- FIX: Check if postId is null OR EMPTY before loading ---
+        if (!postId.isNullOrEmpty()) {
             loadComments()
         } else {
             Toast.makeText(this, "Error: Post ID not found.", Toast.LENGTH_SHORT).show()
@@ -72,6 +73,7 @@ class CommentActivity : AppCompatActivity() {
     }
 
     private fun loadComments() {
+        // The check in onCreate already ensures postId is not null or empty here
         firestore.collection("posts").document(postId!!)
             .collection("comments")
             .orderBy("timestamp", Query.Direction.ASCENDING)
@@ -94,7 +96,8 @@ class CommentActivity : AppCompatActivity() {
         val commentText = binding.commentEditText.text.toString().trim()
         val currentUserId = FirebaseAuth.getInstance().currentUser?.uid
 
-        if (commentText.isEmpty() || currentUserId == null) {
+        // --- FIX: Add another safety check here ---
+        if (commentText.isEmpty() || currentUserId == null || postId.isNullOrEmpty()) {
             return
         }
 

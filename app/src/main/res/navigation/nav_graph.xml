@@ -61,7 +61,6 @@
         android:name="com.example.petstagram_1.ui.dashboard.CommunityForumFragment"
         android:label="Community Forum"
         tools:layout="@layout/fragment_community_forum" >
-        <!-- ADDED: Action to navigate from Community to Create Post -->
         <action
             android:id="@+id/action_nav_community_forum_to_createPostFragment"
             app:destination="@id/createPostFragment" />
@@ -71,11 +70,27 @@
         android:name="com.example.petstagram_1.ui.dashboard.AiAssistantFragment"
         android:label="AI Assistant"
         tools:layout="@layout/fragment_ai_assistant" />
+
+    <!-- UPDATED: Medical Record Fragment with Optional Arguments -->
     <fragment
         android:id="@+id/nav_medical_record"
         android:name="com.example.petstagram_1.ui.dashboard.MedicalRecordFragment"
-        android:label="Medical Record"
-        tools:layout="@layout/fragment_medical_record" />
+        android:label="Medical Records"
+    tools:layout="@layout/fragment_medical_records" >
+    <argument
+        android:name="petId"
+        app:argType="string"
+        app:nullable="true"
+        android:defaultValue="@null" />
+    <argument
+        android:name="petName"
+        app:argType="string"
+        app:nullable="true"
+        android:defaultValue="@null" />
+    <action
+        android:id="@+id/action_medicalRecordFragment_to_addMedicalRecordFragment"
+        app:destination="@id/addMedicalRecordFragment" />
+</fragment>
 
     <!-- Pet Fragments -->
     <fragment
@@ -86,6 +101,9 @@
         <action
             android:id="@+id/action_myPetsFragment_to_addPetFragment"
             app:destination="@id/addPetFragment" />
+        <action
+            android:id="@+id/action_myPetsFragment_to_medicalRecordFragment"
+            app:destination="@id/nav_medical_record" />
     </fragment>
     <fragment
         android:id="@+id/addPetFragment"
@@ -93,11 +111,22 @@
         android:label="@string/add_pet"
         tools:layout="@layout/fragment_add_pet" />
 
-    <!-- ADDED: Create Post Fragment -->
+    <!-- Create Post Fragment -->
     <fragment
         android:id="@+id/createPostFragment"
         android:name="com.example.petstagram_1.ui.post.CreatePostFragment"
         android:label="Create Post"
         tools:layout="@layout/fragment_create_post" />
+
+    <!-- Add Medical Record Fragment -->
+    <fragment
+        android:id="@+id/addMedicalRecordFragment"
+        android:name="com.example.petstagram_1.ui.dashboard.AddMedicalRecordFragment"
+        android:label="Add Medical Record"
+        tools:layout="@layout/fragment_add_medical_record">
+        <argument
+            android:name="petId"
+            app:argType="string" />
+    </fragment>
 
 </navigation>

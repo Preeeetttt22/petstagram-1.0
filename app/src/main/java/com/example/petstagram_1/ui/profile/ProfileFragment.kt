@@ -1,5 +1,6 @@
 package com.example.petstagram_1.ui.profile
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -36,41 +37,55 @@ class ProfileFragment : Fragment() {
         firebaseAuth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
 
-        loadUserData()
         setupClickListeners()
     }
 
+    override fun onResume() {
+        super.onResume()
+        loadUserData()
+    }
+
     private fun loadUserData() {
-        val uid = firebaseAuth.currentUser?.uid ?: return
+        val uid = firebaseAuth.currentUser?.uid
+        if (uid == null) {
+            // Handle user not being logged in if needed
+            return
+        }
 
         firestore.collection("users").document(uid).get()
             .addOnSuccessListener { document ->
-                if (document != null && document.exists()) {
+                // --- FIX: Check if the fragment is still attached to an activity ---
+                // This prevents a crash if the user navigates away while data is loading.
+                if (isAdded && document != null && document.exists()) {
                     val user = document.toObject(User::class.java)
-                    binding.profileUsername.text = user?.username
-                    binding.profileEmail.text = user?.email
+                    user?.let {
+                        binding.profileUsername.text = it.username
+                        binding.profileEmail.text = it.email
 
-                    if (!user?.profileImageUrl.isNullOrEmpty()) {
-                        Glide.with(this)
-                            .load(user?.profileImageUrl)
-                            .circleCrop()
-                            .into(binding.profileImage)
+                        if (!it.profileImageUrl.isNullOrEmpty()) {
+                            Glide.with(this)
+                                .load(it.profileImageUrl)
+                                .circleCrop()
+                                .into(binding.profileImage)
+                        } else {
+                            binding.profileImage.setImageResource(R.drawable.ic_profile)
+                        }
                     }
-                } else {
-                    Toast.makeText(context, "User data not found.", Toast.LENGTH_SHORT).show()
                 }
             }
             .addOnFailureListener { e ->
-                Toast.makeText(context, "Failed to load user data: ${e.message}", Toast.LENGTH_SHORT).show()
+                if (isAdded) {
+                    Toast.makeText(context, "Failed to load user data: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
             }
     }
 
     private fun setupClickListeners() {
         binding.btnEditProfile.setOnClickListener {
-            Toast.makeText(context, "Edit Profile clicked", Toast.LENGTH_SHORT).show()
+            val intent = Intent(activity, EditProfileActivity::class.java)
+            startActivity(intent)
         }
 
-        // --- UPDATED THIS BUTTON ---
         binding.btnMyPets.setOnClickListener {
             findNavController().navigate(R.id.action_nav_profile_to_myPetsFragment)
         }

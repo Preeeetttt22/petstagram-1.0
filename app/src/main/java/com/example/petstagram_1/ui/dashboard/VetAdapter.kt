@@ -8,7 +8,12 @@ import com.example.petstagram_1.R
 import com.example.petstagram_1.databinding.ItemVetListBinding
 import com.example.petstagram_1.models.User
 
-class VetAdapter(private val vetList: List<User>) : RecyclerView.Adapter<VetAdapter.VetViewHolder>() {
+// --- UPDATED CONSTRUCTOR ---
+// It now accepts a function that will be called when the "Book" button is clicked.
+class VetAdapter(
+    private val vetList: List<User>,
+    private val onBookClicked: (User) -> Unit
+) : RecyclerView.Adapter<VetAdapter.VetViewHolder>() {
 
     inner class VetViewHolder(val binding: ItemVetListBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -25,18 +30,20 @@ class VetAdapter(private val vetList: List<User>) : RecyclerView.Adapter<VetAdap
         val vet = vetList[position]
         holder.binding.apply {
             vetName.text = vet.username
-            // Assuming the clinic name is stored in the email field for now
             vetClinicName.text = "Sunshine Pet Clinic" // Placeholder
 
-            // Use Glide to load the profile image
             if (vet.profileImageUrl.isNotEmpty()) {
                 Glide.with(holder.itemView.context)
                     .load(vet.profileImageUrl)
                     .circleCrop()
                     .into(vetImage)
             } else {
-                // Set a default placeholder if no image is available
                 vetImage.setImageResource(R.drawable.ic_profile)
+            }
+
+            // --- UPDATED CLICK LISTENER ---
+            btnBookAppointment.setOnClickListener {
+                onBookClicked(vet) // Pass the selected vet back to the fragment
             }
         }
     }
