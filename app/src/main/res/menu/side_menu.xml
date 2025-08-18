@@ -3,10 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <!-- THE FIX IS HERE: Added a top margin to this group -->
     <group
         android:id="@+id/main_group"
         android:checkableBehavior="single">
+
         <item
             android:id="@+id/nav_dashboard"
             android:icon="@drawable/ic_dashboard"

@@ -5,9 +5,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.petstagram_1.R // Make sure this import is present
 import com.example.petstagram_1.databinding.FragmentCommunityForumBinding
 import com.example.petstagram_1.models.Post
 import com.google.firebase.firestore.FirebaseFirestore
@@ -35,8 +36,10 @@ class CommunityForumFragment : Fragment() {
         firestore = FirebaseFirestore.getInstance()
         setupRecyclerView()
 
+        // UPDATED THIS CLICK LISTENER
         binding.fabAddPost.setOnClickListener {
-            Toast.makeText(context, "Add new post clicked!", Toast.LENGTH_SHORT).show()
+            // This line will navigate to the create post screen
+            findNavController().navigate(R.id.action_nav_community_forum_to_createPostFragment)
         }
 
         loadPostsFromFirestore()
@@ -57,19 +60,20 @@ class CommunityForumFragment : Fragment() {
     private fun loadPostsFromFirestore() {
         firestore.collection("posts")
             .orderBy("timestamp", Query.Direction.DESCENDING) // Show newest posts first
-            .get()
-            .addOnSuccessListener { documents ->
-                if (documents != null) {
+            .addSnapshotListener { snapshots, e -> // Changed to addSnapshotListener for real-time updates
+                if (e != null) {
+                    Log.w("CommunityForumFragment", "Listen failed.", e)
+                    return@addSnapshotListener
+                }
+
+                if (snapshots != null) {
                     postList.clear()
-                    for (document in documents) {
+                    for (document in snapshots) {
                         val post = document.toObject(Post::class.java)
                         postList.add(post)
                     }
                     postAdapter.notifyDataSetChanged()
                 }
-            }
-            .addOnFailureListener { exception ->
-                Log.w("CommunityForumFragment", "Error getting documents: ", exception)
             }
     }
 

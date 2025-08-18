@@ -60,4 +60,10 @@
     <string name="add_new_pet">Add new pet</string>
 
     <string name="add_pet">Add Pet</string>
+
+    <string name="image_of_the_post">Image of the post</string>
+    <string name="caption">Caption…</string>
+    <string name="select_pet">Select Pet</string>
+    <string name="share">Share</string>
+
 </resources>

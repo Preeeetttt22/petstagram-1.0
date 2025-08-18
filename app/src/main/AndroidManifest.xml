@@ -2,6 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- Permissions for internet access and reading images from storage -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+
+
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -14,7 +20,7 @@
         android:theme="@style/Theme.Petstagram_1"
         tools:targetApi="31">
 
-        <!-- 1. Splash Activity is now the starting point -->
+        <!-- Splash Activity (Launcher) -->
         <activity
             android:name=".auth.SplashActivity"
             android:exported="true"
@@ -25,7 +31,7 @@
             </intent-filter>
         </activity>
 
-        <!-- 2. Declare Login and Signup Activities -->
+        <!-- Authentication Activities -->
         <activity
             android:name=".auth.LoginActivity"
             android:exported="false"
@@ -35,15 +41,19 @@
             android:exported="false"
             android:theme="@style/Theme.Petstagram_1.NoActionBar" />
 
-        <!-- 3. MainActivity no longer has the LAUNCHER tag -->
+        <!-- Main Activity -->
         <activity
             android:name=".ui.MainActivity"
             android:exported="false"
             android:label="@string/title_activity_main"
             android:theme="@style/Theme.Petstagram_1.NoActionBar" />
 
-    </application>
+        <!-- Comment Activity -->
+        <activity
+            android:name=".ui.comment.CommentActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Petstagram_1.NoActionBar"/>
 
-    <uses-permission android:name="android.permission.INTERNET" />
+    </application>
 
 </manifest>

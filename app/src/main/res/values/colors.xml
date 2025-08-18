@@ -17,4 +17,7 @@
     <color name="green_500">#4CAF50</color>
     <!-- Add this and remove the old purple_500 if you're no longer using it -->
     <color name="orange_500">#FF9800</color>
+    <color name="stroke_grey">#D1D1D1</color>
+    <color name="grey">#808080</color>
+    <color name="red">#FF0000</color>
 </resources>
