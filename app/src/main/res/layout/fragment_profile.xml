@@ -104,6 +104,25 @@
                     app:iconSize="28dp"
                     app:iconPadding="24dp"/>
 
+                <!-- NEW BUTTON ADDED HERE -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_my_appointments"
+                    style="@style/Widget.Material3.Button.TextButton.Icon"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="My Appointments"
+                    android:gravity="start|center_vertical"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:paddingVertical="16dp"
+                    android:paddingStart="24dp"
+                    android:textAllCaps="false"
+                    app:icon="@drawable/ic_calendar"
+                    app:iconTint="@color/black"
+                    app:iconSize="28dp"
+                    app:iconPadding="24dp"/>
+
+
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_settings"
                     style="@style/Widget.Material3.Button.TextButton.Icon"

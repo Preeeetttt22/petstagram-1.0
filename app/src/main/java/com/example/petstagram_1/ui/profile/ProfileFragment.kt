@@ -90,6 +90,12 @@ class ProfileFragment : Fragment() {
             findNavController().navigate(R.id.action_nav_profile_to_myPetsFragment)
         }
 
+        // --- NEW CLICK LISTENER ---
+        binding.btnMyAppointments.setOnClickListener {
+            // We will create this action in the navigation graph next
+            findNavController().navigate(R.id.action_nav_profile_to_myAppointmentsFragment)
+        }
+
         binding.btnSettings.setOnClickListener {
             findNavController().navigate(R.id.nav_settings)
         }

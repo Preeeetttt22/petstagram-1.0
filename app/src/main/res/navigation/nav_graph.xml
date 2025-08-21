@@ -34,6 +34,10 @@
         <action
             android:id="@+id/action_nav_profile_to_myPetsFragment"
             app:destination="@id/myPetsFragment" />
+
+        <action
+            android:id="@+id/action_nav_profile_to_myAppointmentsFragment"
+            app:destination="@id/myAppointmentsFragment" />
     </fragment>
 
     <!-- Settings Screen -->
@@ -128,5 +132,13 @@
             android:name="petId"
             app:argType="string" />
     </fragment>
+
+
+    <!-- My Appointment button-->
+    <fragment
+        android:id="@+id/myAppointmentsFragment"
+        android:name="com.example.petstagram_1.ui.profile.MyAppointmentsFragment"
+        android:label="My Appointments"
+        tools:layout="@layout/fragment_my_appointments" />
 
 </navigation>

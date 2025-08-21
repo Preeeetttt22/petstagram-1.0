@@ -20,4 +20,9 @@
     <color name="stroke_grey">#D1D1D1</color>
     <color name="grey">#808080</color>
     <color name="red">#FF0000</color>
+
+    <!-- Appointment Status Colors -->
+    <color name="status_scheduled">#FF9800</color> <!-- Orange -->
+    <color name="status_completed">#4CAF50</color> <!-- Green -->
+    <color name="status_cancelled">#F44336</color> <!-- Red -->
 </resources>
