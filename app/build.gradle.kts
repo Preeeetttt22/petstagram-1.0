@@ -74,6 +74,7 @@ dependencies {
 
     // Google Maps for Vet Appointments
     implementation("com.google.android.gms:play-services-maps:18.2.0")
+    implementation("com.google.android.gms:play-services-location:21.3.0")
 
     // Gemini AI for AI Assistant
     // (Note: Check for the latest version of the Gemini SDK when implementing)
