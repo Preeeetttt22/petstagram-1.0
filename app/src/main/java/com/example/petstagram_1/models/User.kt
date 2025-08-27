@@ -17,6 +17,13 @@ data class User(
     val uid: String = "",
     val email: String? = null,
     val username: String = "",
+    val phone: String? = null,
     val role: String = "User", // Default role is "User"
-    val profileImageUrl: String = ""
+    val profileImageUrl: String = "",
+
+    // Veterinarian-specific fields
+    val specialization: String? = null,
+    val about: String? = null,
+    val clinicName: String? = null,
+    val clinicAddress: String? = null
 )

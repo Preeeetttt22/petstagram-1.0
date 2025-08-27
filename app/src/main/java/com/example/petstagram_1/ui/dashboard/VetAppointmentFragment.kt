@@ -13,7 +13,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.petstagram_1.R
 import com.example.petstagram_1.databinding.DialogBookAppointmentBinding
 import com.example.petstagram_1.databinding.FragmentVetAppointmentBinding
 import com.example.petstagram_1.models.Appointment
@@ -29,6 +28,7 @@ class VetAppointmentFragment : Fragment() {
 
     private var _binding: FragmentVetAppointmentBinding? = null
     private val binding get() = _binding!!
+
     private lateinit var vetAdapter: VetAdapter
     private lateinit var firestore: FirebaseFirestore
     private lateinit var firebaseAuth: FirebaseAuth
@@ -52,13 +52,12 @@ class VetAppointmentFragment : Fragment() {
 
         setupRecyclerView()
         loadVetsFromFirestore()
-        loadUserPets() // Pre-load the user's pets
+        loadUserPets() // Pre-load the user's pets for the spinner
     }
 
     private fun setupRecyclerView() {
-        // --- UPDATED ADAPTER INITIALIZATION ---
         vetAdapter = VetAdapter(vetList) { vet ->
-            // This code runs when the "Book" button is clicked
+            // This is the lambda function that gets called when a "Book" button is clicked
             showBookingDialog(vet)
         }
         binding.vetsRecyclerView.apply {
@@ -68,21 +67,33 @@ class VetAppointmentFragment : Fragment() {
     }
 
     private fun loadVetsFromFirestore() {
+        binding.progressBar.visibility = View.VISIBLE
         firestore.collection("users")
             .whereEqualTo("role", "Veterinarian")
             .get()
             .addOnSuccessListener { documents ->
-                if (documents != null) {
-                    vetList.clear()
-                    for (document in documents) {
-                        val vet = document.toObject(User::class.java)
-                        vetList.add(vet)
+                if (isAdded) {
+                    binding.progressBar.visibility = View.GONE
+                    if (documents != null && !documents.isEmpty) {
+                        vetList.clear()
+                        for (document in documents) {
+                            val vet = document.toObject(User::class.java)
+                            vetList.add(vet)
+                        }
+                        vetAdapter.notifyDataSetChanged()
+                        binding.textNoVets.visibility = View.GONE
+                    } else {
+                        binding.textNoVets.visibility = View.VISIBLE
                     }
-                    vetAdapter.notifyDataSetChanged()
                 }
             }
             .addOnFailureListener { exception ->
-                Log.w("VetAppointmentFragment", "Error getting documents: ", exception)
+                if (isAdded) {
+                    binding.progressBar.visibility = View.GONE
+                    binding.textNoVets.text = "Failed to load vets."
+                    binding.textNoVets.visibility = View.VISIBLE
+                    Log.w("VetAppointmentFragment", "Error getting documents: ", exception)
+                }
             }
     }
 
@@ -90,28 +101,35 @@ class VetAppointmentFragment : Fragment() {
         val uid = firebaseAuth.currentUser?.uid ?: return
         firestore.collection("pets").whereEqualTo("ownerId", uid).get()
             .addOnSuccessListener { documents ->
-                userPetList.clear()
-                documents.forEach { doc ->
-                    userPetList.add(doc.toObject(Pet::class.java))
+                if (isAdded) {
+                    userPetList.clear()
+                    documents.forEach { doc ->
+                        userPetList.add(doc.toObject(Pet::class.java))
+                    }
                 }
             }
     }
 
     private fun showBookingDialog(vet: User) {
+        if (userPetList.isEmpty()) {
+            Toast.makeText(context, "You must add a pet to your profile before booking.", Toast.LENGTH_LONG).show()
+            return
+        }
+
         val dialogBinding = DialogBookAppointmentBinding.inflate(layoutInflater)
         val dialogView = dialogBinding.root
 
-        // Setup Spinner
+        // Setup Spinner with pet names
         val petNames = userPetList.map { it.name }
         val spinnerAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, petNames)
         dialogBinding.spinnerSelectPet.adapter = spinnerAdapter
 
-        // Setup Date Picker
+        // Setup Date Picker Button
         dialogBinding.btnSelectDate.setOnClickListener {
             showDatePicker(dialogBinding)
         }
 
-        // Setup Time Picker
+        // Setup Time Picker Button
         dialogBinding.btnSelectTime.setOnClickListener {
             showTimePicker(dialogBinding)
         }
@@ -120,10 +138,6 @@ class VetAppointmentFragment : Fragment() {
             .setView(dialogView)
             .setPositiveButton("Confirm Booking") { _, _ ->
                 val selectedPetPosition = dialogBinding.spinnerSelectPet.selectedItemPosition
-                if (selectedPetPosition == Spinner.INVALID_POSITION || userPetList.isEmpty()) {
-                    Toast.makeText(context, "Please select a pet.", Toast.LENGTH_SHORT).show()
-                    return@setPositiveButton
-                }
                 val selectedPet = userPetList[selectedPetPosition]
                 val reason = dialogBinding.editReason.text.toString().trim()
 
@@ -171,13 +185,13 @@ class VetAppointmentFragment : Fragment() {
             return
         }
 
-        val appointmentId = UUID.randomUUID().toString()
+        val appointmentId = firestore.collection("appointments").document().id
         val newAppointment = Appointment(
             appointmentId = appointmentId,
             userId = currentUserId,
             vetId = vet.uid,
             petId = pet.petId,
-            clinicName = "Sunshine Pet Clinic", // Placeholder
+            clinicName = vet.clinicName ?: "Clinic Not Specified",
             appointmentDate = Timestamp(selectedDateTime.time),
             reason = reason,
             status = "Scheduled"

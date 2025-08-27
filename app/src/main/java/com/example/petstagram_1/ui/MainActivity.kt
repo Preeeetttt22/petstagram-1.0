@@ -7,6 +7,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
@@ -26,8 +27,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var firestore: FirebaseFirestore
-    // Added a variable to hold the NavController
     private lateinit var navController: NavController
+    private var isInitialNavigationDone = false // Flag to handle one-time redirect
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,19 +41,18 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.toolbar)
 
-        // --- THE FIX IS HERE ---
-        // 1. Get the NavHostFragment from the layout.
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment_content_main) as NavHostFragment
-        // 2. Get the NavController from the NavHostFragment.
         navController = navHostFragment.navController
 
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
 
+        // --- IMPORTANT: Add nav_vet_profile as a top-level destination ---
+        // This ensures the hamburger menu icon shows correctly on the vet profile screen.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_dashboard, R.id.nav_profile, R.id.nav_settings, R.id.nav_admin_panel
+                R.id.nav_dashboard, R.id.nav_profile, R.id.nav_settings, R.id.nav_admin_panel, R.id.nav_vet_dashboard, R.id.nav_vet_profile
             ), drawerLayout
         )
 
@@ -71,9 +71,50 @@ class MainActivity : AppCompatActivity() {
                     val user = document.toObject(User::class.java)
                     val navView: NavigationView = binding.navView
                     val menu: Menu = navView.menu
-                    val adminMenuItem = menu.findItem(R.id.nav_admin_panel)
 
-                    adminMenuItem?.isVisible = user?.role == "Admin"
+                    val adminMenuItem = menu.findItem(R.id.nav_admin_panel)
+                    val dashboardMenuItem = menu.findItem(R.id.nav_dashboard)
+                    val profileMenuItem = menu.findItem(R.id.nav_profile) // Get a reference to the profile item
+
+                    adminMenuItem?.isVisible = false
+
+                    when (user?.role) {
+                        "Admin" -> {
+                            adminMenuItem?.isVisible = true
+                            // No special navigation needed for Admin
+                        }
+                        "Veterinarian" -> {
+                            // Override for Dashboard button
+                            dashboardMenuItem?.setOnMenuItemClickListener {
+                                if (navController.currentDestination?.id != R.id.nav_vet_dashboard) {
+                                    navController.navigate(R.id.nav_vet_dashboard)
+                                }
+                                binding.drawerLayout.close()
+                                true
+                            }
+
+                            // --- THIS IS THE FIX: Override for Profile button ---
+                            profileMenuItem?.setOnMenuItemClickListener {
+                                if (navController.currentDestination?.id != R.id.nav_vet_profile) {
+                                    navController.navigate(R.id.nav_vet_profile)
+                                }
+                                binding.drawerLayout.close()
+                                true // Consume the click event
+                            }
+
+                            // One-time redirect to vet dashboard after login
+                            if (!isInitialNavigationDone) {
+                                val navOptions = NavOptions.Builder()
+                                    .setPopUpTo(R.id.nav_dashboard, true)
+                                    .build()
+                                navController.navigate(R.id.nav_vet_dashboard, null, navOptions)
+                                isInitialNavigationDone = true
+                            }
+                        }
+                        else -> { // "User" or any other role
+                            // No overrides needed, the default navigation is correct.
+                        }
+                    }
                 }
             }
     }
@@ -98,7 +139,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        // Use the navController variable we defined earlier
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 }

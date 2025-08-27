@@ -141,4 +141,43 @@
         android:label="My Appointments"
         tools:layout="@layout/fragment_my_appointments" />
 
+    <!-- Vet Dashboard Screen -->
+    <fragment
+        android:id="@+id/nav_vet_dashboard"
+        android:name="com.example.petstagram_1.ui.vet.VetDashboardFragment"
+        android:label="Vet Dashboard"
+        tools:layout="@layout/fragment_vet_dashboard" >
+
+        <!-- This action defines the navigation path -->
+        <action
+            android:id="@+id/action_vetDashboardFragment_to_myScheduleFragment"
+            app:destination="@id/nav_my_schedule" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_my_schedule"
+        android:name="com.example.petstagram_1.ui.vet.MyScheduleFragment"
+        android:label="My Schedule"
+        tools:layout="@layout/fragment_my_schedule" />
+
+    <fragment
+        android:id="@+id/nav_edit_vet_profile"
+        android:name="com.example.petstagram_1.ui.vet.EditVetProfileFragment"
+        android:label="Edit Profile"
+        tools:layout="@layout/fragment_edit_vet_profile" />
+
+    <fragment
+        android:id="@+id/nav_vet_profile"
+        android:name="com.example.petstagram_1.ui.vet.VetProfileFragment"
+        android:label="Veterinarian Profile"
+        tools:layout="@layout/fragment_vet_profile">
+
+        <!-- This action defines the navigation path from the profile to the edit screen -->
+        <action
+            android:id="@+id/action_vetProfileFragment_to_editVetProfileFragment"
+            app:destination="@id/nav_edit_vet_profile" />
+
+    </fragment>
+
+
 </navigation>

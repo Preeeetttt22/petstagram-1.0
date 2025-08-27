@@ -67,4 +67,18 @@
     <string name="share">Share</string>
 
     <string name="select_a_pet">Select a Pet</string>
+
+
+    <string name="tap_to_change_photo">Tap to change photo</string>
+    <string name="full_name">Full Name</string>
+    <string name="specialization">Specialization (e.g., Veterinary Surgeon)</string>
+    <string name="about_me">About Me</string>
+    <string name="clinic_name">Clinic Name</string>
+    <string name="clinic_address">Clinic Address</string>
+    <string name="contact_phone">Contact Phone</string>
+    <string name="save_changes">Save Changes</string>
+
+    <!-- You may also need these for the profile view screen -->
+    <string name="edit_profile">Edit Profile</string>
+    <string name="clinic_details">Clinic Details</string>
 </resources>
