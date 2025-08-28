@@ -210,19 +210,28 @@
                             android:background="@android:color/darker_gray"/>
                     </LinearLayout>
 
+
                     <!-- Google Sign In Button -->
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/buttonSignUpGoogle"
+                        style="@style/Widget.Material3.Button.OutlinedButton.Icon"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="8dp"
+                        android:backgroundTint="@color/white"
+                        android:padding="12dp"
                         android:text="Sign Up with Google"
+                        android:textSize="14dp"
+                        android:textColor="@android:color/black"
+                        app:cornerRadius="15dp"
                         app:icon="@drawable/ic_google_logo"
                         app:iconGravity="textStart"
-                        app:cornerRadius="15dp"
-                        android:backgroundTint="@color/white"
-                        android:textColor="@color/black"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginBottom="8dp"/>
+                        app:iconPadding="16dp"
+                        app:iconTint="@null"
+                        app:strokeColor="@android:color/darker_gray"
+                        app:strokeWidth="1dp" />
+
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
