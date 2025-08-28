@@ -89,8 +89,12 @@ class SignupActivity : AppCompatActivity() {
     }
 
     private fun signUpWithGoogle() {
-        val signInIntent = googleSignInClient.signInIntent
-        googleSignInLauncher.launch(signInIntent)
+        // --- THIS IS THE FIX ---
+        // Sign out of the Google client first to force the account picker dialog.
+        googleSignInClient.signOut().addOnCompleteListener {
+            val signInIntent = googleSignInClient.signInIntent
+            googleSignInLauncher.launch(signInIntent)
+        }
     }
 
     private val googleSignInLauncher = registerForActivityResult(
@@ -129,7 +133,8 @@ class SignupActivity : AppCompatActivity() {
         userRef.get().addOnSuccessListener { document ->
             if (!document.exists()) {
                 val selectedRoleId = binding.rolesRadioGroup.checkedRadioButtonId
-                val selectedRole = findViewById<RadioButton>(selectedRoleId).text.toString()
+                val selectedRoleButton = findViewById<RadioButton>(selectedRoleId)
+                val selectedRole = selectedRoleButton?.text?.toString() ?: "User"
                 val user = User(uid = uid, username = username, email = email, role = selectedRole)
 
                 userRef.set(user)
@@ -140,6 +145,7 @@ class SignupActivity : AppCompatActivity() {
                         Toast.makeText(this, "Failed to save user data: ${e.message}", Toast.LENGTH_LONG).show()
                     }
             } else {
+                // If user already exists, just proceed
                 if (isGoogleSignIn) navigateToMainActivity() else showEmailVerificationAndRedirect()
             }
         }

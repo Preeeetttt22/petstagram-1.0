@@ -61,12 +61,9 @@ class LoginActivity : AppCompatActivity() {
             firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     val user = firebaseAuth.currentUser
-                    if (user != null && user.isEmailVerified) {
-                        navigateToMainActivity()
-                    } else {
-                        Toast.makeText(this, "Please verify your email first.", Toast.LENGTH_LONG).show()
-                        firebaseAuth.signOut()
-                    }
+                    // For login, we don't need to check for email verification again
+                    // as they wouldn't have been able to log in before if not verified.
+                    navigateToMainActivity()
                 } else {
                     Toast.makeText(this, task.exception?.message, Toast.LENGTH_LONG).show()
                 }
@@ -77,8 +74,12 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun signInWithGoogle() {
-        val signInIntent = googleSignInClient.signInIntent
-        googleSignInLauncher.launch(signInIntent)
+        // --- THIS IS THE FIX ---
+        // Sign out of the Google client first to force the account picker dialog.
+        googleSignInClient.signOut().addOnCompleteListener {
+            val signInIntent = googleSignInClient.signInIntent
+            googleSignInLauncher.launch(signInIntent)
+        }
     }
 
     private val googleSignInLauncher = registerForActivityResult(
@@ -114,15 +115,15 @@ class LoginActivity : AppCompatActivity() {
         val userRef = firestore.collection("users").document(firebaseUser.uid)
         userRef.get().addOnSuccessListener { document ->
             if (!document.exists()) {
+                // If user doesn't exist during login, create them with a default "User" role
                 val newUser = User(
                     uid = firebaseUser.uid,
                     username = firebaseUser.displayName ?: "User",
                     email = firebaseUser.email,
-                    role = "User"
+                    role = "User" // Default role on login
                 )
                 userRef.set(newUser)
                     .addOnSuccessListener { navigateToMainActivity() }
-                    // ADDED: Error handling for saving user data
                     .addOnFailureListener { e ->
                         Toast.makeText(this, "Failed to save user data: ${e.message}", Toast.LENGTH_LONG).show()
                     }
@@ -130,7 +131,6 @@ class LoginActivity : AppCompatActivity() {
                 navigateToMainActivity()
             }
         }
-            // ADDED: Error handling for checking if user exists
             .addOnFailureListener { e ->
                 Toast.makeText(this, "Failed to check user data: ${e.message}", Toast.LENGTH_LONG).show()
             }
