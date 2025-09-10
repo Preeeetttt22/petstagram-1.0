@@ -1,5 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Primary Brand Colors from Gradient -->
+    <color name="brand_purple">#833AB4</color>
+    <color name="brand_pink">#E1306C</color>
+    <color name="brand_orange">#FD963F</color>
+    <color name="brand_yellow">#FFDC80</color>
+
+    <!-- Standard Colors -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="light_gray">#F0F0F0</color>
+
+    <!-- Button Colors -->
+    <color name="blue_500">#2196F3</color>
+    <color name="pink_500">#E91E63</color>
+    <color name="green_500">#4CAF50</color>
+    <!-- Add this and remove the old purple_500 if you're no longer using it -->
+    <color name="orange_500">#FF9800</color>
+    <color name="stroke_grey">#D1D1D1</color>
+    <color name="grey">#808080</color>
+    <color name="red">#FF0000</color>
+
+    <!-- Appointment Status Colors -->
+    <color name="status_scheduled">#FF9800</color> <!-- Orange -->
+    <color name="status_completed">#4CAF50</color> <!-- Green -->
+    <color name="status_cancelled">#F44336</color> <!-- Red -->
 </resources>

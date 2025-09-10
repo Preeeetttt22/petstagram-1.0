@@ -1,4 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group
+        android:id="@+id/main_group"
+        android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_dashboard"
+            android:icon="@drawable/ic_dashboard"
+            android:title="@string/menu_dashboard" />
+        <item
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/ic_profile"
+            android:title="@string/menu_profile" />
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_settings"
+            android:title="@string/menu_settings" />
+    </group>
+
+    <!-- This is a separate group for admin-only items -->
+    <item android:title="@string/admin_section_title">
+        <menu>
+            <item
+                android:id="@+id/nav_admin_panel"
+                android:icon="@drawable/ic_admin_panel"
+                android:title="@string/menu_admin_panel"
+                android:visible="false"
+                tools:visible="true"/>
+        </menu>
+    </item>
 
 </menu>

@@ -1,6 +1,183 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/nav_graph">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/nav_dashboard">
+
+    <!-- Dashboard Screen -->
+    <fragment
+        android:id="@+id/nav_dashboard"
+        android:name="com.example.petstagram_1.ui.dashboard.DashboardFragment"
+        android:label="@string/menu_dashboard"
+        tools:layout="@layout/fragment_dashboard" >
+        <action
+            android:id="@+id/action_nav_dashboard_to_nav_vet_appointment"
+            app:destination="@id/nav_vet_appointment" />
+        <action
+            android:id="@+id/action_nav_dashboard_to_nav_community_forum"
+            app:destination="@id/nav_community_forum" />
+        <action
+            android:id="@+id/action_nav_dashboard_to_nav_ai_assistant"
+            app:destination="@id/nav_ai_assistant" />
+        <action
+            android:id="@+id/action_nav_dashboard_to_nav_medical_record"
+            app:destination="@id/nav_medical_record" />
+    </fragment>
+
+    <!-- Profile Screen -->
+    <fragment
+        android:id="@+id/nav_profile"
+        android:name="com.example.petstagram_1.ui.profile.ProfileFragment"
+        android:label="@string/menu_profile"
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_nav_profile_to_myPetsFragment"
+            app:destination="@id/myPetsFragment" />
+
+        <action
+            android:id="@+id/action_nav_profile_to_myAppointmentsFragment"
+            app:destination="@id/myAppointmentsFragment" />
+    </fragment>
+
+    <!-- Settings Screen -->
+    <fragment
+        android:id="@+id/nav_settings"
+        android:name="com.example.petstagram_1.ui.settings.SettingsFragment"
+        android:label="@string/menu_settings"
+        tools:layout="@layout/fragment_settings" />
+
+    <!-- Admin Panel Screen -->
+    <fragment
+        android:id="@+id/nav_admin_panel"
+        android:name="com.example.petstagram_1.ui.admin.AdminPanelFragment"
+        android:label="@string/menu_admin_panel"
+        tools:layout="@layout/fragment_admin_panel" />
+
+    <!-- Feature screens -->
+    <fragment
+        android:id="@+id/nav_vet_appointment"
+        android:name="com.example.petstagram_1.ui.dashboard.VetAppointmentFragment"
+        android:label="Vet Appointment"
+        tools:layout="@layout/fragment_vet_appointment" />
+    <fragment
+        android:id="@+id/nav_community_forum"
+        android:name="com.example.petstagram_1.ui.dashboard.CommunityForumFragment"
+        android:label="Community Forum"
+        tools:layout="@layout/fragment_community_forum" >
+        <action
+            android:id="@+id/action_nav_community_forum_to_createPostFragment"
+            app:destination="@id/createPostFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_ai_assistant"
+        android:name="com.example.petstagram_1.ui.dashboard.AiAssistantFragment"
+        android:label="AI Assistant"
+        tools:layout="@layout/fragment_ai_assistant" />
+
+    <!-- UPDATED: Medical Record Fragment with Optional Arguments -->
+    <fragment
+        android:id="@+id/nav_medical_record"
+        android:name="com.example.petstagram_1.ui.dashboard.MedicalRecordFragment"
+        android:label="Medical Records"
+    tools:layout="@layout/fragment_medical_records" >
+    <argument
+        android:name="petId"
+        app:argType="string"
+        app:nullable="true"
+        android:defaultValue="@null" />
+    <argument
+        android:name="petName"
+        app:argType="string"
+        app:nullable="true"
+        android:defaultValue="@null" />
+    <action
+        android:id="@+id/action_medicalRecordFragment_to_addMedicalRecordFragment"
+        app:destination="@id/addMedicalRecordFragment" />
+</fragment>
+
+    <!-- Pet Fragments -->
+    <fragment
+        android:id="@+id/myPetsFragment"
+        android:name="com.example.petstagram_1.ui.profile.MyPetsFragment"
+        android:label="My Pets"
+        tools:layout="@layout/fragment_my_pets" >
+        <action
+            android:id="@+id/action_myPetsFragment_to_addPetFragment"
+            app:destination="@id/addPetFragment" />
+        <action
+            android:id="@+id/action_myPetsFragment_to_medicalRecordFragment"
+            app:destination="@id/nav_medical_record" />
+    </fragment>
+    <fragment
+        android:id="@+id/addPetFragment"
+        android:name="com.example.petstagram_1.ui.profile.AddPetFragment"
+        android:label="@string/add_pet"
+        tools:layout="@layout/fragment_add_pet" />
+
+    <!-- Create Post Fragment -->
+    <fragment
+        android:id="@+id/createPostFragment"
+        android:name="com.example.petstagram_1.ui.post.CreatePostFragment"
+        android:label="Create Post"
+        tools:layout="@layout/fragment_create_post" />
+
+    <!-- Add Medical Record Fragment -->
+    <fragment
+        android:id="@+id/addMedicalRecordFragment"
+        android:name="com.example.petstagram_1.ui.dashboard.AddMedicalRecordFragment"
+        android:label="Add Medical Record"
+        tools:layout="@layout/fragment_add_medical_record">
+        <argument
+            android:name="petId"
+            app:argType="string" />
+    </fragment>
+
+
+    <!-- My Appointment button-->
+    <fragment
+        android:id="@+id/myAppointmentsFragment"
+        android:name="com.example.petstagram_1.ui.profile.MyAppointmentsFragment"
+        android:label="My Appointments"
+        tools:layout="@layout/fragment_my_appointments" />
+
+    <!-- Vet Dashboard Screen -->
+    <fragment
+        android:id="@+id/nav_vet_dashboard"
+        android:name="com.example.petstagram_1.ui.vet.VetDashboardFragment"
+        android:label="Vet Dashboard"
+        tools:layout="@layout/fragment_vet_dashboard" >
+
+        <!-- This action defines the navigation path -->
+        <action
+            android:id="@+id/action_vetDashboardFragment_to_myScheduleFragment"
+            app:destination="@id/nav_my_schedule" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_my_schedule"
+        android:name="com.example.petstagram_1.ui.vet.MyScheduleFragment"
+        android:label="My Schedule"
+        tools:layout="@layout/fragment_my_schedule" />
+
+    <fragment
+        android:id="@+id/nav_edit_vet_profile"
+        android:name="com.example.petstagram_1.ui.vet.EditVetProfileFragment"
+        android:label="Edit Profile"
+        tools:layout="@layout/fragment_edit_vet_profile" />
+
+    <fragment
+        android:id="@+id/nav_vet_profile"
+        android:name="com.example.petstagram_1.ui.vet.VetProfileFragment"
+        android:label="Veterinarian Profile"
+        tools:layout="@layout/fragment_vet_profile">
+
+        <!-- This action defines the navigation path from the profile to the edit screen -->
+        <action
+            android:id="@+id/action_vetProfileFragment_to_editVetProfileFragment"
+            app:destination="@id/nav_edit_vet_profile" />
+
+    </fragment>
+
 
 </navigation>

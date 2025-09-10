@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <!-- This sets the background color of the bubble.
+         You can change it to any of your brand colors. -->
+    <solid android:color="@color/brand_purple" />
+
+    <!-- This makes the corners rounded. -->
+    <corners android:radius="16dp" />
+
+</shape>

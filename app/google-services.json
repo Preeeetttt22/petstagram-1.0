@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "23801578705",
+    "project_id": "petstagram-1-8704f",
+    "storage_bucket": "petstagram-1-8704f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:23801578705:android:2a5116ecc8d276c89ff1f0",
+        "android_client_info": {
+          "package_name": "com.example.petstagram_1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "23801578705-g2li7fsku8uqgvnqf4uu3usv2fk5bsa9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.petstagram_1",
+            "certificate_hash": "af6e2ab8ef80738b13a3653f768fa9092d4b3783"
+          }
+        },
+        {
+          "client_id": "23801578705-h16vfkigh0h1gm7gtog1kt9a16il9v6u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCpGyFv6lsBsfGoyA72CsJor0VoeEg-dpc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "23801578705-h16vfkigh0h1gm7gtog1kt9a16il9v6u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

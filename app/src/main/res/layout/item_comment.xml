@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="12dp">
+
+    <ImageView
+        android:id="@+id/comment_author_image"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/comment_author_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@id/comment_author_image"
+        app:layout_constraintTop_toTopOf="@id/comment_author_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="Username" />
+
+    <TextView
+        android:id="@+id/comment_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="@id/comment_author_name"
+        app:layout_constraintTop_toBottomOf="@id/comment_author_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="This is a sample comment text that shows what a user might write." />
+
+    <TextView
+        android:id="@+id/comment_timestamp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@id/comment_text"
+        app:layout_constraintTop_toBottomOf="@id/comment_text"
+        tools:text="1 hour ago" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,9 +1,29 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.Petstagram1" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    <style name="Theme.Petstagram_1" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/brand_pink</item>
+        <item name="colorPrimaryVariant">@color/brand_purple</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/brand_orange</item>
+        <item name="colorSecondaryVariant">@color/brand_yellow</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <!-- Customize your theme here. -->
     </style>
 
-    <style name="Theme.Petstagram1" parent="Base.Theme.Petstagram1" />
+    <!-- Theme for a screen with no app bar (This is now the default) -->
+    <style name="Theme.Petstagram_1.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <!-- ADDED: Theme for the top Toolbar -->
+    <style name="Theme.Petstagram_1.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <!-- ADDED: Theme for the popup menus (like the 3-dot options menu) -->
+    <style name="Theme.Petstagram_1.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
 </resources>
