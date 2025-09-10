@@ -114,9 +114,13 @@ Sync the project with Gradle files.
 Build and run the application on an emulator or a physical device.
 
 ✒️ Author
+
 Preet Darji - [preet220704@gmail.com]
+
 Isha V. Solanki - [ishasolanki29@gmail.com]
+
 Jainil Parmar - [prmrjainil04@gmail.com]
+
 Manush Desai - [manushdesai2110@gmail.com]
 
 Feel free to reach out with any questions or feedback!
