@@ -14,6 +14,7 @@ import com.google.ai.client.generativeai.type.GenerateContentResponse
 import com.google.ai.client.generativeai.type.ServerException
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import com.example.petstagram_1.BuildConfig
 
 class AiAssistantFragment : Fragment() {
 
@@ -21,7 +22,9 @@ class AiAssistantFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var chatAdapter: ChatMessageAdapter
     private val messageList = mutableListOf<ChatMessage>()
-    private lateinit var generativeModel: GenerativeModel
+
+    // Make it nullable to avoid crash if not initialized
+    private var generativeModel: GenerativeModel? = null
 
     // Constants for the retry logic
     private val MAX_RETRIES = 3
@@ -40,11 +43,18 @@ class AiAssistantFragment : Fragment() {
 
         setupRecyclerView()
 
-        val apiKey = "AIzaSyARvTeF1IHS-hZuLrYSm3SzG9axVbI09qw" // Make sure you've pasted your key here
-        generativeModel = GenerativeModel(
-            modelName = "gemini-1.5-flash-latest",
-            apiKey = apiKey
-        )
+        val apiKey: String = BuildConfig.GEMINI_API_KEY
+
+        // ✅ Initialize model safely
+        if (apiKey.isNotEmpty()) {
+            generativeModel = GenerativeModel(
+                modelName = "gemini-1.5-flash-latest",
+                apiKey = apiKey
+            )
+        } else {
+            messageList.add(ChatMessage("Error: API key is missing!", isUser = false))
+            updateChat()
+        }
 
         binding.btnSend.setOnClickListener {
             sendMessage()
@@ -74,39 +84,44 @@ class AiAssistantFragment : Fragment() {
 
             // --- Call the Gemini AI API with Retry Logic ---
             lifecycleScope.launch {
+                val model = generativeModel
+                if (model == null) {
+                    messageList.removeLast()
+                    messageList.add(ChatMessage("Error: AI model not initialized", isUser = false))
+                    updateChat()
+                    return@launch
+                }
+
                 var response: GenerateContentResponse? = null
                 var finalError: Exception? = null
 
                 for (attempt in 1..MAX_RETRIES) {
                     try {
-                        response = generativeModel.generateContent(messageText)
+                        response = model.generateContent(messageText)
                         // If successful, break the loop
                         break
                     } catch (e: ServerException) {
-                        // This specific exception is often for overload
                         finalError = e
-                        // Update UI to show retry attempt
-                        messageList[messageList.size - 1] = ChatMessage("Server busy, retrying ($attempt/$MAX_RETRIES)...", false)
+                        messageList[messageList.size - 1] =
+                            ChatMessage("Server busy, retrying ($attempt/$MAX_RETRIES)...", false)
                         updateChat()
-                        // Wait before trying again (exponential backoff)
                         delay(INITIAL_DELAY * attempt)
                     } catch (e: Exception) {
-                        // Handle other potential errors (e.g., no internet)
                         finalError = e
-                        break // Don't retry on other errors
+                        break
                     }
                 }
 
                 // --- Process the final result ---
-                messageList.removeLast() // Remove "Thinking..." or "Retrying..." message
+                messageList.removeLast()
                 if (response != null) {
                     response.text?.let {
                         val aiMessage = ChatMessage(it, isUser = false)
                         messageList.add(aiMessage)
                     }
                 } else {
-                    // If all retries failed, show the final error
-                    val errorMessage = ChatMessage("Error: ${finalError?.message}", isUser = false)
+                    val errorMessage =
+                        ChatMessage("Error: ${finalError?.message}", isUser = false)
                     messageList.add(errorMessage)
                 }
                 updateChat()
@@ -115,7 +130,6 @@ class AiAssistantFragment : Fragment() {
     }
 
     private fun updateChat() {
-        // We need to make sure UI updates happen on the main thread
         activity?.runOnUiThread {
             chatAdapter.notifyDataSetChanged()
             binding.chatRecyclerView.scrollToPosition(messageList.size - 1)

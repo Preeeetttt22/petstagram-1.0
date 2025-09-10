@@ -1,3 +1,5 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -16,8 +18,12 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        val geminiApiKey = gradleLocalProperties(rootDir).getProperty("GEMINI_API_KEY")
+            ?: throw GradleException("GEMINI_API_KEY not found in local.properties")
+
+        buildConfigField("String", "GEMINI_API_KEY", "\"$geminiApiKey\"")
     }
 
     buildTypes {
@@ -39,6 +45,7 @@ android {
     // Add this block to enable ViewBinding
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
 }
 
